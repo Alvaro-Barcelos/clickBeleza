@@ -1,0 +1,77 @@
+CREATE DATABASE clickbeleza;
+
+
+CREATE TABLE atendimento (
+id_atendimento int PRIMARY KEY AUTO_INCREMENT,
+id_funcionario int,
+id_cliente int,
+id_tipo_atendimento int,
+data_atendimento date,
+hora_atendimento time,
+observacao text
+)
+
+CREATE TABLE tipo_atendimento (
+id_tipo_atendimento int PRIMARY KEY AUTO_INCREMENT,
+descricao Varchar(100),
+preco decimal(10,2)
+)
+
+CREATE TABLE cliente (
+id_cliente int PRIMARY KEY AUTO_INCREMENT,
+nome_cliente Varchar(100),
+telefone Varchar(20),
+email Varchar(100),
+data_nascimento date,
+cpf Varchar(14),
+endereco Varchar(80),
+bairro varchar(30),
+numero int,
+cidade Varchar(50)
+)
+
+CREATE TABLE funcionario (
+id_funcionario int PRIMARY KEY AUTO_INCREMENT,
+nome_funcionario Varchar(100),
+cargo Varchar(50),
+telefone Varchar(20),
+email Varchar(100),
+cpf Varchar(14),
+data_nascimento date,
+endereco Varchar(80),
+bairro varchar(30),
+numero int,
+cidade Varchar(50)
+)
+
+CREATE TABLE login (
+id_login int PRIMARY KEY AUTO_INCREMENT,
+usuario Varchar(45),
+senha Varchar(16),
+permissao Varchar(16),
+id_funcionario int,
+FOREIGN KEY(id_funcionario) REFERENCES funcionario (id_funcionario)
+)
+
+CREATE TABLE produto(
+id_produto int PRIMARY KEY AUTO_INCREMENT,
+nome_produto Varchar(50),
+preco decimal(10,2)
+)
+
+CREATE TABLE venda_produto (
+id_venda_produto int PRIMARY KEY AUTO_INCREMENT,
+id_produto int,
+id_cliente int,
+id_funcionario int,
+quantidade int,
+valor_total decimal(10,2),
+data_venda date,
+FOREIGN KEY(id_produto) REFERENCES estoque (id_produto),
+FOREIGN KEY(id_cliente) REFERENCES cliente (id_cliente),
+FOREIGN KEY(id_funcionario) REFERENCES funcionario (id_funcionario)
+)
+
+ALTER TABLE atendimento ADD FOREIGN KEY(id_funcionario) REFERENCES funcionario (id_funcionario)
+ALTER TABLE atendimento ADD FOREIGN KEY(id_cliente) REFERENCES cliente (id_cliente)
+ALTER TABLE atendimento ADD FOREIGN KEY(id_tipo_atendimento) REFERENCES tipo_atendimento (id_tipo_atendimento)
